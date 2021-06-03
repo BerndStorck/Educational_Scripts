@@ -1,0 +1,41 @@
+#! /bin/bash
+#
+# back 1.5
+#
+# Performs "cd .." one or multiple times.
+#
+# IMPORTANT: To run this script it has to be sourced, this means you
+# have to create an alias which do this:
+# alias back='source back'
+# (In "home/username/.bashrc" or in "/home/username/.bash_aliases".)
+#
+# Sightly optimized version of an educational script by Francesco Santi,
+# which he has presented in his introductional bash course "Bash Shell
+# Scripting: From Zero To Automation" at Udemy.
+#
+# It's function differs from Sants's script in the fact that mine
+# performs "cd .." if no parameter is given.
+#
+# At an educational level this script demonstrates the following:
+#
+# 	- The for loop in C style.
+#	- The avoidance of creating a sub shell by using "source".
+#
+# Contact: Bernd Storck, https://www.facebook.com/BStLinux
+
+if [ "$1" = "--help" ]; then
+	echo
+	echo " back   	# Performs 'cd ..'"
+	echo " back n 	# Performs 'cd ..' n times."
+	echo
+	echo " EXAMPLE: 'back 3' is 'cd ..; cd ..; cd..'"
+	echo
+	echo " IMPORTANT: Don't forget to establish the alias \"alias back='source back'\"!"
+	echo
+elif [ -n "$1" ]; then
+	for (( i=1; i<=$1; i++ )); do
+		cd ..
+	done
+else
+	cd ..
+fi
