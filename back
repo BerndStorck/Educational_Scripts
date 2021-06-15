@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# back 1.5
+# back 1.6
 #
 # Performs "cd .." one or multiple times.
 #
@@ -13,7 +13,7 @@
 # which he has presented in his introductional bash course "Bash Shell
 # Scripting: From Zero To Automation" at Udemy.
 #
-# It's function differs from Sants's script in the fact that mine
+# It's function differs from Santi's script in the fact that mine
 # performs "cd .." if no parameter is given.
 #
 # At an educational level this script demonstrates the following:
@@ -23,19 +23,28 @@
 #
 # Contact: Bernd Storck, https://www.facebook.com/BStLinux
 
+proginfo () {
+	echo "
+ back   	# Performs 'cd ..'
+ back n 	# Performs 'cd ..' n times.
+
+ EXAMPLE: 'back 3' is 'cd ..; cd ..; cd..'
+
+ IMPORTANT: Don't forget to establish the alias \"alias back='source back'\"!"
+
+}
+
 if [ "$1" = "--help" ]; then
-	echo
-	echo " back   	# Performs 'cd ..'"
-	echo " back n 	# Performs 'cd ..' n times."
-	echo
-	echo " EXAMPLE: 'back 3' is 'cd ..; cd ..; cd..'"
-	echo
-	echo " IMPORTANT: Don't forget to establish the alias \"alias back='source back'\"!"
-	echo
+	proginfo
 elif [ -n "$1" ]; then
-	for (( i=1; i<=$1; i++ )); do
-		cd ..
-	done
+	if grep -q '[[:digit:]]+' <<< "$1"; then
+		for (( i=1; i<=$1; i++ )); do
+			cd ..
+		done
+	else
+		echo -e "\n ERROR: Wrong parameter: \"$1\"\n\n USAGE:"
+		proginfo
+	fi
 else
 	cd ..
 fi
